@@ -185,11 +185,11 @@ public class http implements Runnable{
 		if (fileRequested.endsWith(".htm")  ||  fileRequested.endsWith(".html")){
 			return "text/html";
 		}
-		else if(fileRequested.endsWith(".png")){
+		else if(fileRequested.endsWith(".css")){
 			return "text/css";
 		}
-		else if(fileRequested.endsWith(".css")){
-			return "image/png";
+		else if(fileRequested.endsWith(".gif")){
+			return "image/gif";
 		}
 		else if(fileRequested.endsWith(".js")){
 			return "text/javascript";
