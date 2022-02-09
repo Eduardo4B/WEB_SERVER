@@ -117,8 +117,48 @@ public class http implements Runnable{
 				String content = getContentType(fileRequested);
 				
 				if (method.equals("GET")) { // GET method so we return content
-					byte[] fileData = readFileData(file, fileLength);
 					
+
+					if(fileRequested.endsWith(".json")){
+						Deserializzazionexml xml = new Deserializzazionexml();
+						root2 valorexml =xml.DeserializzaXml();
+
+						Serializzazionejson json = new Serializzazionejson();
+						String valorejson =json.SerializzaJson(valorexml);
+
+						out.println("HTTP/1.1 200 OK");
+						out.println("Server: Java HTTP Server from SSaurel : 1.0");
+						out.println("Date: " + new Date());
+						out.println("Content-type: " + content);
+						out.println("Content-length: " + valorejson.length());
+						out.println(); // blank line between headers and content, very important !
+						out.flush(); // flush character output stream buffer
+					
+						dataOut.write(valorejson.getBytes(), 0, valorejson.length());
+						dataOut.flush();
+					}
+
+					else if(fileRequested.endsWith(".xml")){
+						Deserializzazionejson json = new Deserializzazionejson();
+						root valorejson =json.DeserializzajSON();
+
+						Serializzazionexml xml = new Serializzazionexml();
+						String valorexml =xml.serializzaXml(valorejson);
+
+						out.println("HTTP/1.1 200 OK");
+						out.println("Server: Java HTTP Server from SSaurel : 1.0");
+						out.println("Date: " + new Date());
+						out.println("Content-type: " + content);
+						out.println("Content-length: " + valorexml.length());
+						out.println(); // blank line between headers and content, very important !
+						out.flush(); // flush character output stream buffer
+					
+						dataOut.write(valorexml.getBytes(), 0, valorexml.length());
+						dataOut.flush();
+					}
+
+					else{
+						byte[] fileData = readFileData(file, fileLength);
 					// send HTTP Headers
 					out.println("HTTP/1.1 200 OK");
 					out.println("Server: Java HTTP Server from SSaurel : 1.0");
@@ -130,7 +170,9 @@ public class http implements Runnable{
 					
 					dataOut.write(fileData, 0, fileLength);
 					dataOut.flush();
+					}
 				}
+			
 				
 				if (verbose) {
 					System.out.println("File " + fileRequested + " of type " + content + " returned");
@@ -193,7 +235,13 @@ public class http implements Runnable{
 		}
 		else if(fileRequested.endsWith(".js")){
 			return "text/javascript";
-		}	
+		}
+		else if(fileRequested.endsWith(".json")){
+			return "application/json";
+		}
+		else if(fileRequested.endsWith(".xml")){
+			return "text/xml";
+		}			
 		else
 			return "text/plain";
 	}
