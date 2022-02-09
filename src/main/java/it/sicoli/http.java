@@ -1,4 +1,4 @@
-package it.galli;
+package it.sicoli;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;

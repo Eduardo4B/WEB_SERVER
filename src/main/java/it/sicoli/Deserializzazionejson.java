@@ -1,4 +1,4 @@
-package it.galli;
+package it.sicoli;
 
 import java.io.File;
 import java.io.IOException;

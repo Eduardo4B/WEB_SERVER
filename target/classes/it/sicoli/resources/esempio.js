@@ -1,5 +1,5 @@
 console.clear()
-alert("ciao bello!");
+alert("ciao carissimo!");
 
 // const node = document.getElementById('id')
 // const node = document.getElementsByClassName('class')
